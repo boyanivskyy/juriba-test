@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GridOptions } from 'ag-grid-community';
+import { Store } from '@ngrx/store';
+import { DashboardActions } from '../state/dashboard.actions';
+import { DashboardPartialState } from '../state/dashboard.reducer';
 
 @Component({
     selector: 'app-dashboard',
@@ -22,7 +25,7 @@ export class DashboardComponent implements OnInit {
 
     gridOptions: GridOptions;
 
-    constructor() {
+    constructor(private store: Store<DashboardPartialState>) {
         this.gridOptions = {
             context: {
                 componentParent: this,
@@ -32,5 +35,7 @@ export class DashboardComponent implements OnInit {
         // this.gridOptions.rowData = this.c;
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.store.dispatch(DashboardActions.getData());
+    }
 }

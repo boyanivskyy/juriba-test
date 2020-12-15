@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "juriba"
+  "defaultProject": "juriba",
+  "cli": {
+    "analytics": "08c9b3a5-1a0f-4d65-9010-986b4db25ffa"
+  }
 }

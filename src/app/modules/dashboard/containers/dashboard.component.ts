@@ -117,7 +117,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.gridOptions = {
             suppressRowClickSelection: true,
             rowSelection: 'multiple',
-            isNodeSelectable: false,
         };
 
         this.rowData = this.dashboard$.allItems$.pipe(

@@ -5,30 +5,36 @@ export interface ApiResponse {
     regionCode: string;
     pageInfo: {
         totalResults: number;
-        resultsPerPage: 50;
+        resultsPerPage: number;
     };
-    items: DashboardEntity[];
+    items: DashboardItem[];
 }
 
-export interface DashboardEntity {
+export interface BaseDashboardItem {
     kind: string;
     etag: string;
+    snippet: Snippet;
+}
+
+export interface DashboardItem extends BaseDashboardItem {
     id: {
         kind: string;
         videoId: string;
     };
-    snippet: Snippet;
+}
+export interface DashboardEntity extends BaseDashboardItem {
+    id: string;
 }
 
 export interface Snippet {
-    publishedAt: Date;
+    publishedAt: string;
     channelId: string;
     title: string;
     description: string;
-    thumdnails: Thumbnails;
+    thumbnails: Thumbnails;
     channelTitle: string;
     liveBroadcastContent: string;
-    publishTime: Date;
+    publishTime: string;
 }
 
 export interface Thumbnails {

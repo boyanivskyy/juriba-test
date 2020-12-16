@@ -10,8 +10,14 @@ export const getDataSuccess = createAction(
 
 export const getDataFailed = createAction('[Dashboard] Get Data Failed', props<{ error: any }>());
 
+export const selectRow = createAction(
+    '[Dashboard] Select row',
+    props<{ id: number; value: boolean }>()
+);
+
 export const DashboardActions = {
     getData,
     getDataSuccess,
     getDataFailed,
+    selectRow,
 };

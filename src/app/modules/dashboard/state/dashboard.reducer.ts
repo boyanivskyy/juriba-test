@@ -1,4 +1,5 @@
-import { DashboardActions } from './dashboard.actions';
+import { DashboardState } from './../../../state/dashboard.reducer';
+import { DashboardActions, selectRow } from './dashboard.actions';
 import { DashboardEntity } from '../../../models/dashboard.model';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on, Action } from '@ngrx/store';
@@ -9,6 +10,10 @@ export const DASHBOARD_FEATURE_KEY = 'dashboard';
 export interface DashboardState extends EntityState<DashboardEntity> {
     pending: boolean;
     error: any;
+    totalResults: number;
+    resultsPerPage: number;
+    rowForSelection: number;
+    selectedRawId: any;
 }
 
 export interface DashboardPartialState {
@@ -21,8 +26,10 @@ const initialState: DashboardState = dashboardAdapter.getInitialState({
     // set initial required properties
     pending: false,
     error: null,
-    totalResults: null,
-    resultsPerPage: null,
+    totalResults: 0,
+    resultsPerPage: 0,
+    rowForSelection: null,
+    selectedRawId: null,
 });
 
 const dashboardReducer = createReducer(
@@ -31,19 +38,29 @@ const dashboardReducer = createReducer(
         ...state,
         pending: true,
     })),
-    on(DashboardActions.getDataSuccess, (state, { items, totalResults, resultsPerPage }) => ({
-        ...state,
-        totalResults,
-        resultsPerPage,
-        pending: false,
-    })),
+    on(DashboardActions.getDataSuccess, (state, { items, totalResults, resultsPerPage }) =>
+        dashboardAdapter.setAll(items, {
+            ...state,
+            totalResults,
+            resultsPerPage,
+            pending: false,
+        })
+    ),
     on(DashboardActions.getDataFailed, (state, { error }) => ({
         ...state,
         pending: false,
         error,
+    })),
+    on(DashboardActions.selectRow, (state, { id, value }) => ({
+        ...state,
+        rowForSelection: value,
+        selectedRawId: id,
     }))
 );
 
-export function dashboardReducerFn(state: DashboardState | undefined, action: Action) {
+export function dashboardReducerFn(
+    state: DashboardState | undefined,
+    action: Action
+): () => DashboardState {
     return dashboardReducer(state, action);
 }

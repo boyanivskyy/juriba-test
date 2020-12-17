@@ -1,6 +1,6 @@
 # How to run API
 
-To run API youtube key need to be changed in environment.ts (my key is no longer working )
+To run API new youtube key needs to be generated and added in file environment.ts to apiUrl (my key is no longer working )
 
 # Juriba
 

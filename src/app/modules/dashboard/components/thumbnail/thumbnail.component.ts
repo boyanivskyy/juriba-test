@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 export class ImageFormatterComponent {
     params: any;
 
-    agInit(params: DashboardItem): void {
+    agInit(params: any): void {
         this.params = params;
     }
 }

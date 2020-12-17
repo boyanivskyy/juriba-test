@@ -9,7 +9,7 @@ import { DashboardItem } from 'src/app/models/dashboard.model';
 export class LinkComponent {
     params: any;
 
-    agInit(params: DashboardItem): void {
+    agInit(params: any): void {
         this.params = params;
     }
 }

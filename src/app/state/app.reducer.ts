@@ -3,6 +3,6 @@ export const appReducer = createReducer({});
 
 export const APP_FEATURE_KEY = 'users';
 
-export function appReducerFn(state: undefined, action: Action) {
+export function appReducerFn(state: undefined, action: Action): {} {
     return appReducer(state, action);
 }

@@ -1,1 +1,5 @@
-<img src="{{ params.value.snippet.thumbnails.default.url }}" />
+<img
+    [width]="params.value.snippet.thumbnails.default.width"
+    [height]="params.value.snippet.thumbnails.default.height"
+    src="{{ params.value.snippet.thumbnails.default.url }}"
+/>

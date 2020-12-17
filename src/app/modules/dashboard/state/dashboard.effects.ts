@@ -1,4 +1,5 @@
-import { ApiResponse } from './../../../models/dashboard.model';
+import { DashboardEntity } from '../../../models/dashboard.model';
+import { ApiResponse, DashboardItem } from './../../../models/dashboard.model';
 import { DashboardActions } from './dashboard.actions';
 import { ApiService } from '../services/api.service';
 import { Injectable } from '@angular/core';
@@ -47,7 +48,7 @@ export class DashboardEffects {
             this.actions$.pipe(
                 ofType(DashboardActions.getDataSuccess),
                 tap((items) => {
-                    // Some code to show success message
+                    // alert('You received your data');
                 })
             ),
         { dispatch: false }
@@ -58,7 +59,7 @@ export class DashboardEffects {
             this.actions$.pipe(
                 ofType(DashboardActions.getDataFailed),
                 tap((error) => {
-                    // Handle error code here
+                    alert('Some error occured');
                 })
             ),
         { dispatch: false }
@@ -70,11 +71,11 @@ export class DashboardEffects {
         private store$: Store<DashboardPartialState>
     ) {}
 
-    private mapItems(data: ApiResponse) {
+    private mapItems(data: ApiResponse): DashboardEntity[] {
         return data?.items?.map((item) => ({ ...item, id: item.id.videoId }));
     }
 
-    get itemsData() {
+    get itemsData(): ApiResponse {
         return {
             kind: 'youtube#searchListResponse',
             etag: 'hcO2_hirIkCRSDYvc6H9SyIsqhI',

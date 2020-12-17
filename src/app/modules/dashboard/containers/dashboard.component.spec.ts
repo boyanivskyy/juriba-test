@@ -10,8 +10,8 @@ import { AgGridModule } from 'ag-grid-angular';
 import { DashboardComponent } from './dashboard.component';
 
 describe('DashboardComponent', () => {
-    let component: DashboardComponent;
-    let fixture: ComponentFixture<DashboardComponent>;
+    // let component: DashboardComponent;
+    // let fixture: ComponentFixture<DashboardComponent>;
 
     beforeEach(async () => {
         //     // For best practices components and providers should be mocked classes

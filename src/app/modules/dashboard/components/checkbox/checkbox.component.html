@@ -1,6 +1,1 @@
-<input
-    [name]="params?.value"
-    type="checkbox"
-    [checked]="isChecked"
-    (change)="onCheckboxValueChanged()"
-/>
+<input type="checkbox" [checked]="params.value.checked" (change)="onCheckboxValueChanged()" />

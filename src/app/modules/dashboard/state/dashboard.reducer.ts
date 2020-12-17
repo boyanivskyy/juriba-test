@@ -22,7 +22,6 @@ export interface DashboardPartialState {
 export const dashboardAdapter: EntityAdapter<DashboardEntity> = createEntityAdapter<DashboardEntity>();
 
 const initialState: DashboardState = dashboardAdapter.getInitialState({
-    // set initial required properties
     pending: false,
     error: '',
     totalResults: 0,

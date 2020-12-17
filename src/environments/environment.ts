@@ -6,7 +6,7 @@ export const environment = {
     production: false,
     youtubeApiKey: 'AIzaSyAI0ti37Rt7Hb-EZyp9KnGthivlLgqv4Tk',
     apiUrl:
-        'https://www.googleapis.com/youtube/v3/search?key=AIzaSyAI0ti37Rt7Hb-EZyp9KnGthivlLgqv4Tk&maxResults=50&type=video&part=snippet&q=john',
+        'https://www.googleapis.com/youtube/v3/search?key=AIzaSyDZeX74vj2ywPTYFyJBWSNV86wmnoIjteU&maxResults=50&type=video&part=snippet&q=john',
 };
 
 /*

@@ -24,13 +24,7 @@ import { appReducerFn, APP_FEATURE_KEY } from './state/app.reducer';
             logOnly: environment.production,
         }),
     ],
-    providers: [
-        // {
-        //     provide: HTTP_INTERCEPTORS,
-        //     useClass: TokenInterceptor,
-        //     multi: true,
-        // },
-    ],
+    providers: [],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

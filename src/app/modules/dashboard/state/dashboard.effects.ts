@@ -67,7 +67,7 @@ export class DashboardEffects {
         return data?.items?.map((item) => ({ ...item, id: item.id.videoId }));
     }
 
-    // API Key for youtube is expiring very fast
+    // API Key for youtube is expiring very fast so i mock data
     get testItemsData(): ApiResponse {
         return {
             kind: 'youtube#searchListResponse',

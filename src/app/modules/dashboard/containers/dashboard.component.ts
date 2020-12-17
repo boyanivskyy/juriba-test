@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     toggleSelectionMode(): void {
         this.selectionMode = !this.selectionMode;
-        this.gridOptions.columnApi.setColumnVisible('checkbox', this.selectionMode);
+        this.gridOptions?.columnApi?.setColumnVisible('checkbox', this.selectionMode);
         if (this.gridApi) {
             this.gridApi.sizeColumnsToFit();
         }

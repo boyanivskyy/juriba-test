@@ -1,19 +1,17 @@
-import { DashboardState } from './../../../state/dashboard.reducer';
-import { DashboardActions, selectRow, selectAllRows } from './dashboard.actions';
+import { DashboardActions } from './dashboard.actions';
 import { DashboardEntity } from '../../../models/dashboard.model';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on, Action } from '@ngrx/store';
-import { state } from '@angular/animations';
 
 export const DASHBOARD_FEATURE_KEY = 'dashboard';
 
 export interface DashboardState extends EntityState<DashboardEntity> {
     pending: boolean;
-    error: any;
+    error: string;
     totalResults: number;
     resultsPerPage: number;
-    rowForSelection: number;
-    selectedRawId: any;
+    rowForSelection: boolean;
+    selectedRawId: string;
     selectAllRows: boolean;
 }
 
@@ -26,11 +24,11 @@ export const dashboardAdapter: EntityAdapter<DashboardEntity> = createEntityAdap
 const initialState: DashboardState = dashboardAdapter.getInitialState({
     // set initial required properties
     pending: false,
-    error: null,
+    error: '',
     totalResults: 0,
     resultsPerPage: 0,
-    rowForSelection: null,
-    selectedRawId: null,
+    rowForSelection: false,
+    selectedRawId: '',
     selectAllRows: false,
 });
 
@@ -56,6 +54,11 @@ const dashboardReducer = createReducer(
     on(DashboardActions.selectRow, (state, { id, value }) => ({
         ...state,
         rowForSelection: value,
+        selectRawId: id,
+    })),
+    on(DashboardActions.selectRow, (state, { id, value }) => ({
+        ...state,
+        rowForSelection: value,
         selectedRawId: id,
     })),
     on(DashboardActions.selectAllRows, (state, { selectAllRows }) => ({
@@ -67,6 +70,6 @@ const dashboardReducer = createReducer(
 export function dashboardReducerFn(
     state: DashboardState | undefined,
     action: Action
-): () => DashboardState {
+): DashboardState {
     return dashboardReducer(state, action);
 }

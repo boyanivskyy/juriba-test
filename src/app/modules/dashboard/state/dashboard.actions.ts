@@ -12,7 +12,7 @@ export const getDataFailed = createAction('[Dashboard] Get Data Failed', props<{
 
 export const selectRow = createAction(
     '[Dashboard] Select row',
-    props<{ id: number; value: boolean }>()
+    props<{ id: string; value: boolean }>()
 );
 
 export const selectAllRows = createAction(

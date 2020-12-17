@@ -18,23 +18,15 @@ export class DashboardEffects {
                 this.apiService.getData().pipe(
                     map((result) =>
                         DashboardActions.getDataSuccess({
-                            // items: this.mapItems(result),
-                            // totalResults: result.pageInfo.totalResults,
-                            // resultsPerPage: result.pageInfo.resultsPerPage,
-                            items: this.mapItems(this.itemsData),
-                            totalResults: 1000,
-                            resultsPerPage: 50,
+                            items: this.mapItems(result),
+                            totalResults: result.pageInfo.totalResults,
+                            resultsPerPage: result.pageInfo.resultsPerPage,
                         })
                     ),
-                    catchError((errors) =>
+                    catchError((error) =>
                         of(
-                            DashboardActions.getDataSuccess({
-                                // items: this.mapItems(result),
-                                // totalResults: result.pageInfo.totalResults,
-                                // resultsPerPage: result.pageInfo.resultsPerPage,
-                                items: this.mapItems(this.itemsData),
-                                totalResults: 1000,
-                                resultsPerPage: 50,
+                            DashboardActions.getDataFailed({
+                                error,
                             })
                         )
                     )
@@ -48,7 +40,7 @@ export class DashboardEffects {
             this.actions$.pipe(
                 ofType(DashboardActions.getDataSuccess),
                 tap((items) => {
-                    // alert('You received your data');
+                    alert('You received your data');
                 })
             ),
         { dispatch: false }
@@ -75,7 +67,8 @@ export class DashboardEffects {
         return data?.items?.map((item) => ({ ...item, id: item.id.videoId }));
     }
 
-    get itemsData(): ApiResponse {
+    // API Key for youtube is expiring very fast
+    get testItemsData(): ApiResponse {
         return {
             kind: 'youtube#searchListResponse',
             etag: 'hcO2_hirIkCRSDYvc6H9SyIsqhI',

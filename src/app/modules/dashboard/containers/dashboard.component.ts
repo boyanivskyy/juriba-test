@@ -17,25 +17,22 @@ import { DatePipe } from '@angular/common';
 })
 export class DashboardComponent implements OnInit {
     rowData!: Observable<any>;
-    selectedRowsCount = 0;
     selectionMode = true;
     selectAllRows: boolean;
 
-    columnDefs: any;
-    gridOptions = {} as GridOptions;
+    selectedRowsCount = 0;
 
     @ViewChild('agGrid')
     agGrid!: AgGridAngular;
+
+    columnDefs: any;
+    gridOptions = {} as GridOptions;
     gridApi: any;
     getRowNodeId: any;
 
     constructor(private dashboard$: DashboardFacade, private datePipe: DatePipe) {
         this.initGridSettings();
         this.selectAllRows = false;
-
-        this.getRowNodeId = (data: any) => {
-            return data?.id as string;
-        };
     }
 
     ngOnInit(): void {
@@ -157,6 +154,10 @@ export class DashboardComponent implements OnInit {
                 return mapped;
             })
         );
+
+        this.getRowNodeId = (data: any) => {
+            return data?.id as string;
+        };
     }
 
     private formatDate(date: string): string | null {

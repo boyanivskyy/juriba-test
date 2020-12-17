@@ -1,3 +1,7 @@
+# How to run API
+
+To run API youtube key need to be changed in environment.ts (my key is no longer working )
+
 # Juriba
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.3.

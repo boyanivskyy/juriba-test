@@ -28,10 +28,10 @@ const selectedRaw = createSelector(getDashboardState, (state: DashboardState) =>
     selectedRawId: state.selectedRawId,
 }));
 
-const selectAllRaws = createSelector(getDashboardState, (state: DashboardState) => ({
-    selecteAllRows: state.selectAllRows,
-    rowForSelection: { rowForSelection: state.rowForSelection, selectedRawId: state.selectedRawId },
-}));
+const selectAllRaws = createSelector(
+    getDashboardState,
+    (state: DashboardState) => state.selectAllRows
+);
 
 export const dashboardQuery = {
     getPending,

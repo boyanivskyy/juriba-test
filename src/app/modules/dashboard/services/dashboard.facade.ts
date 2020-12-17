@@ -27,6 +27,10 @@ export class DashboardFacade {
         this.store.dispatch(DashboardActions.selectRow(payload));
     }
 
+    clearRowForSelection(): void {
+        this.store.dispatch(DashboardActions.clearRowSelection());
+    }
+
     setAllRowsSelection(payload: { selectAllRows: boolean }): void {
         this.store.dispatch(DashboardActions.selectAllRows(payload));
     }

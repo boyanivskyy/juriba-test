@@ -5,6 +5,7 @@ import { ImageFormatterComponent } from './thumbnail.component';
 describe('ImageFormatterComponent', () => {
     let component: ImageFormatterComponent;
     let fixture: ComponentFixture<ImageFormatterComponent>;
+    let el: DebugElement;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -15,6 +16,7 @@ describe('ImageFormatterComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ImageFormatterComponent);
         component = fixture.componentInstance;
+        el = fixture.debugElement;
         fixture.detectChanges();
     });
 

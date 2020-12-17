@@ -64,6 +64,12 @@ const dashboardReducer = createReducer(
     on(DashboardActions.selectAllRows, (state, { selectAllRows }) => ({
         ...state,
         selectAllRows,
+    })),
+    on(DashboardActions.clearRowSelection, (state) => ({
+        ...state,
+        rowForSelection: false,
+        selectRawId: '',
+        selectAllRows: false,
     }))
 );
 

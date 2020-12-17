@@ -10,7 +10,6 @@ export class LinkComponent {
     params: any;
 
     agInit(params: DashboardItem): void {
-        console.log(params);
         this.params = params;
     }
 }

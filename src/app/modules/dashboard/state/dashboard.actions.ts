@@ -20,10 +20,13 @@ export const selectAllRows = createAction(
     props<{ selectAllRows: boolean }>()
 );
 
+export const clearRowSelection = createAction('[Dashboard] Clear Select row');
+
 export const DashboardActions = {
     getData,
     getDataSuccess,
     getDataFailed,
     selectRow,
     selectAllRows,
+    clearRowSelection,
 };

@@ -2,12 +2,8 @@ import { LinkComponent } from './../components/link/link.component';
 import { map, skip } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { DashboardFacade } from './../services/dashboard.facade';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GridOptions } from 'ag-grid-community';
-import { Store, select } from '@ngrx/store';
-import { DashboardActions } from '../state/dashboard.actions';
-import { DashboardPartialState } from '../state/dashboard.reducer';
-import { DashboardEntity } from 'src/app/models/dashboard.model';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ImageFormatterComponent } from '../components/thumbnail/thumbnail.component';
 import { CheckboxComponent } from '../components/checkbox/checkbox.component';
@@ -19,34 +15,36 @@ import { DatePipe } from '@angular/common';
     styleUrls: ['./dashboard.component.scss'],
     providers: [DatePipe],
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
-    rowData: Observable<any>;
+export class DashboardComponent implements OnInit {
+    rowData!: Observable<any>;
     selectedRowsCount = 0;
     selectionMode = true;
+    selectAllRows: boolean;
 
     columnDefs: any;
     gridOptions = {} as GridOptions;
 
-    @ViewChild('agGrid') agGrid: AgGridAngular;
+    @ViewChild('agGrid')
+    agGrid!: AgGridAngular;
     gridApi: any;
 
     constructor(private dashboard$: DashboardFacade, private datePipe: DatePipe) {
         this.initGridSettings();
+        this.selectAllRows = false;
     }
 
     ngOnInit(): void {
         this.dashboard$.getData();
     }
 
-    ngAfterViewInit(): void {
-        // this.api;
-    }
-
     onCheckboxChanged(event: any): void {
+        console.log(event);
+        this.selectAllRows = !this.selectAllRows;
         const selectedNodes = this.agGrid.api.getSelectedNodes();
         this.selectedRowsCount = selectedNodes.length;
+
         this.dashboard$.setAllRowsSelection({
-            selectAllRows: this.selectedRowsCount === 50,
+            selectAllRows: this.selectAllRows,
         });
     }
 
@@ -57,9 +55,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             this.gridApi.sizeColumnsToFit();
         }
         if (!this.selectionMode) {
+            this.dashboard$.clearRowForSelection();
             this.gridApi.forEachNode((node: any) => {
-                node.setSelected(this.selectionMode);
+                node.setSelected(false);
             });
+            this.selectAllRows = false;
+            this.selectedRowsCount = 0;
         }
     }
 
@@ -88,6 +89,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                     const displayedColumns = params.columnApi.getAllDisplayedColumns();
                     return displayedColumns[0] === params.column;
                 },
+                name: 'select-all',
                 headerName: '',
                 width: 20,
                 headerRendererFramework: CheckboxComponent,

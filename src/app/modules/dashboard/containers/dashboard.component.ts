@@ -4,18 +4,20 @@ import { Observable } from 'rxjs';
 import { DashboardFacade } from './../services/dashboard.facade';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { GridOptions } from 'ag-grid-community';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { DashboardActions } from '../state/dashboard.actions';
 import { DashboardPartialState } from '../state/dashboard.reducer';
 import { DashboardEntity } from 'src/app/models/dashboard.model';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ImageFormatterComponent } from '../components/thumbnail/thumbnail.component';
 import { CheckboxComponent } from '../components/checkbox/checkbox.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
+    providers: [DatePipe],
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
     rowData: Observable<any>;
@@ -23,12 +25,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     selectionMode = true;
 
     columnDefs: any;
-    gridOptions: GridOptions;
+    gridOptions = {} as GridOptions;
 
     @ViewChild('agGrid') agGrid: AgGridAngular;
     gridApi: any;
 
-    constructor(private dashboard$: DashboardFacade) {
+    constructor(private dashboard$: DashboardFacade, private datePipe: DatePipe) {
         this.initGridSettings();
     }
 
@@ -40,9 +42,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         // this.api;
     }
 
-    onCheckboxChanged(): void {
+    onCheckboxChanged(event: any): void {
         const selectedNodes = this.agGrid.api.getSelectedNodes();
         this.selectedRowsCount = selectedNodes.length;
+        this.dashboard$.setAllRowsSelection({
+            selectAllRows: this.selectedRowsCount === 50,
+        });
     }
 
     toggleSelectionMode(): void {
@@ -50,6 +55,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.gridOptions.columnApi.setColumnVisible('checkbox', this.selectionMode);
         if (this.gridApi) {
             this.gridApi.sizeColumnsToFit();
+        }
+        if (!this.selectionMode) {
+            this.gridApi.forEachNode((node: any) => {
+                node.setSelected(this.selectionMode);
+            });
         }
     }
 
@@ -61,8 +71,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     private onCustomRowSelect(): void {
         this.dashboard$.rowForSelection$.pipe(skip(1)).subscribe((res) => {
-            console.log(res);
-            this.gridApi.forEachNode((node) => {
+            this.gridApi.forEachNode((node: any) => {
                 const id = node.data.checkbox.id;
                 if (id === res.selectedRawId) {
                     node.setSelected(res.rowForSelection);
@@ -124,12 +133,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 const mapped = items.map((item) => ({
                     checkbox: item,
                     thumbnail: item,
-                    publishedAt: item.snippet.publishedAt,
+                    publishedAt: this.formatDate(item.snippet.publishedAt),
                     title: item,
                     description: item.snippet.description,
                 }));
                 return mapped;
             })
         );
+    }
+
+    private formatDate(date: string): string | null {
+        return this.datePipe.transform(date, 'medium');
     }
 }

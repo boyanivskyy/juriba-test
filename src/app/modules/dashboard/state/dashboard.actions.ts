@@ -15,9 +15,15 @@ export const selectRow = createAction(
     props<{ id: number; value: boolean }>()
 );
 
+export const selectAllRows = createAction(
+    '[Dashboard] Select all rows',
+    props<{ selectAllRows: boolean }>()
+);
+
 export const DashboardActions = {
     getData,
     getDataSuccess,
     getDataFailed,
     selectRow,
+    selectAllRows,
 };

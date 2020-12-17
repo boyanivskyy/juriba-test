@@ -12,7 +12,7 @@
     [rowData]="rowData | async"
     [columnDefs]="columnDefs"
     [gridOptions]="gridOptions"
-    (checkboxChanged)="onCheckboxChanged()"
+    (checkboxChanged)="onCheckboxChanged($event)"
     (gridReady)="onGridReady($event)"
 >
 </ag-grid-angular>

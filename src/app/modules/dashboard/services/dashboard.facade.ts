@@ -1,4 +1,3 @@
-import { dashboardQuery } from './../state/dashboard.selectors';
 import { DashboardPartialState } from '../state/dashboard.reducer';
 import { Injectable } from '@angular/core';
 import { ActionsSubject, select, Store } from '@ngrx/store';
@@ -11,6 +10,7 @@ export class DashboardFacade {
     pending$ = this.store.pipe(select(dashboardQuery.getPending));
     allItems$ = this.store.pipe(select(dashboardQuery.getState));
     rowForSelection$ = this.store.pipe(select(dashboardQuery.selectedRaw));
+    selectAllRaws$ = this.store.pipe(select(dashboardQuery.selectAllRaws));
 
     successfullyFetchedData$ = this.actionsSubject.pipe(ofType(DashboardActions.getDataSuccess));
 
@@ -25,5 +25,9 @@ export class DashboardFacade {
 
     setRowForSelection(payload: any): void {
         this.store.dispatch(DashboardActions.selectRow(payload));
+    }
+
+    setAllRowsSelection(payload: { selectAllRows: boolean }): void {
+        this.store.dispatch(DashboardActions.selectAllRows(payload));
     }
 }

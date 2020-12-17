@@ -1,5 +1,5 @@
 import { DashboardState } from './../../../state/dashboard.reducer';
-import { DashboardActions, selectRow } from './dashboard.actions';
+import { DashboardActions, selectRow, selectAllRows } from './dashboard.actions';
 import { DashboardEntity } from '../../../models/dashboard.model';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on, Action } from '@ngrx/store';
@@ -14,6 +14,7 @@ export interface DashboardState extends EntityState<DashboardEntity> {
     resultsPerPage: number;
     rowForSelection: number;
     selectedRawId: any;
+    selectAllRows: boolean;
 }
 
 export interface DashboardPartialState {
@@ -30,6 +31,7 @@ const initialState: DashboardState = dashboardAdapter.getInitialState({
     resultsPerPage: 0,
     rowForSelection: null,
     selectedRawId: null,
+    selectAllRows: false,
 });
 
 const dashboardReducer = createReducer(
@@ -55,6 +57,10 @@ const dashboardReducer = createReducer(
         ...state,
         rowForSelection: value,
         selectedRawId: id,
+    })),
+    on(DashboardActions.selectAllRows, (state, { selectAllRows }) => ({
+        ...state,
+        selectAllRows,
     }))
 );
 

@@ -66,4 +66,11 @@ describe('CheckboxComponent', () => {
         expect(spy).toHaveBeenCalled();
         expect(component.params.value.checked).toBe(true);
     });
+
+    it('should change checkbox value when select all', () => {
+        (component as any).dashboard$.selectAllRaws$.subscribe((res: boolean) => {
+            expect(res).toBeTruthy();
+            expect(component.params.value.checked).toBeTruthy();
+        });
+    });
 });
